@@ -1,0 +1,2 @@
+Day 1: Learned CPU, RAM, Storage, macOS
+Day 2: Learned 13 terminal commands + how the internet works
