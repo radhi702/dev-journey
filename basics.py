@@ -82,3 +82,17 @@ original_price = 1000
 final_price = calculate_discount(original_price, "premium")
 print("final_price:" + str(final_price))
 
+
+def get_name():
+    print("Radhika")
+
+def return_name():
+    return "Radhika"
+
+result1 = get_name()
+result2 = return_name()
+
+print("Result1: ", result1)
+print("Result2: ", result2)
+
+
