@@ -14,10 +14,10 @@ if (plan === "premium") {
 
 // loops
 
-let customers = ["Rai", "billie", "Vegas", "Tinni"];
+let persons = ["Rai", "billie", "Vegas", "Tinni"];
 
-for (let i = 0; i < customers.length; i++) { 
-    console.log("Helo " + customers[i]);
+for (let i = 0; i < persons.length; i++) { 
+    console.log("Helo " + persons[i]);
 
 }
 
@@ -32,21 +32,21 @@ function greetcustomer(name, plan) {
     }
 
 greetcustomer("Honey", "premium")
-greetcustomer("Bunny" + "free")
+greetcustomer("Bunny", "free")
     
 
 
 // creating dictionary
 
-let customer = {
+let singlecustomer = {
     name: "Radhika",
     email: "radhika@gmail.com",
     plan: "premium",
     active: "true"
 };
 
-console.log(customer.name)
-console.log(customer["name"])
+console.log(singlecustomer.name)
+console.log(singlecustomer["name"])
  
 // list of dictionaries
 
@@ -58,3 +58,17 @@ let customers = [
 
 let premium = customers.filter(c => c.plan === "premium");
 console.log("Premium customers", premium.length)
+
+// functions that returns a value
+
+function calculatediscount(price, plan) {
+    if (plan === "premium") {
+        return price * 0.8;
+    } else {
+        return price;
+    }
+    }
+
+let originalprice = 1000;
+let finalprice = calculatediscount(originalprice, "premium");
+console.log("finalprice: " + finalprice);

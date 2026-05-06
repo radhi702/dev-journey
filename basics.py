@@ -68,3 +68,17 @@ for customer in customers:
 print("Premium customers:", len(premium))
 for p in premium:
     print(p["name"])
+
+# functions that returns a value
+
+def calculate_discount(price, plan):
+    if plan == "premium":
+        return price * 0.8      # 20% discount
+    else:
+        return price
+
+# using the returned value
+original_price = 1000
+final_price = calculate_discount(original_price, "premium")
+print("final_price:" + str(final_price))
+
