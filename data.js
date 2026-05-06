@@ -17,3 +17,5 @@ console.log("premium customers: " + premiumCustomers.length);
 console.log(premiumCustomers);
 
 
+
+
