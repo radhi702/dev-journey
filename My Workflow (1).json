@@ -1,0 +1,59 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "my-first-webhook",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "bc74ab1e-244c-42a1-afa5-0e9a70dd149f",
+      "name": "Webhook",
+      "webhookId": "04cd152d-5904-46d7-a90f-195e9c878657"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst item = items[0].json;\n\nconst name = item.body.name;\nconst email = item.body.email;\nconst plan = item.body.plan;\n\nlet message = \"\";\n\nif (plan === \"premium\") {\n    message = \"Welcome VIP \" + name + \"! Your premium account is ready.\";\n} else {\n    message = \"Welcome \" + name + \"! Consider upgrading to premium.\";\n}\n\nreturn [{\n    json: {\n        name: name,\n        email: email,\n        plan: plan,\n        message: message\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "64933f04-7c7a-4ec0-a788-dab5bd022804",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c90e9cc7-33e4-49b8-b270-16179379bb98",
+  "meta": {
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "8sv4qbpN2rt47pKi",
+  "tags": []
+}
