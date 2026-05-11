@@ -29,6 +29,94 @@
       ],
       "id": "64933f04-7c7a-4ec0-a788-dab5bd022804",
       "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/users/{{$json.name}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "41c45eae-565e-464f-a9c8-1037e39a2989",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "ddff4c24-a87f-4839-abaf-287d37cf4420",
+              "leftValue": "={{$json.public_repos}}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "f55f4cb4-a8a4-45f0-ba56-40b7a01f54f7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5641fa9f-84c0-4116-a6a9-21e5da16bfc5",
+              "name": "github_username",
+              "value": "={{$json.login}}",
+              "type": "string"
+            },
+            {
+              "id": "bde7d2a8-b069-4e0c-9fcd-db3403d63c1c",
+              "name": "full_name",
+              "value": "={{$json.name}}",
+              "type": "string"
+            },
+            {
+              "id": "f772956e-3d24-4383-805f-31831eb75ea3",
+              "name": "public_repos",
+              "value": "={{ $json.public_repos}}",
+              "type": "string"
+            },
+            {
+              "id": "867169a0-b8e3-4ceb-897d-159c89b28473",
+              "name": "profile_url",
+              "value": "={{$json.html_url}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        -96
+      ],
+      "id": "db1fa3a7-b435-4b2b-ad7e-ab9f265d60d2",
+      "name": "Edit Fields"
     }
   ],
   "pinData": {},
@@ -43,6 +131,39 @@
           }
         ]
       ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -50,7 +171,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "c90e9cc7-33e4-49b8-b270-16179379bb98",
+  "versionId": "9b34c930-c220-4e38-bcc2-f94a4a7c0a92",
   "meta": {
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
   },
