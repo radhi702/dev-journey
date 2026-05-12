@@ -24,8 +24,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        208,
-        0
+        160,
+        -208
       ],
       "id": "64933f04-7c7a-4ec0-a788-dab5bd022804",
       "name": "Code in JavaScript"
@@ -38,8 +38,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        416,
-        0
+        208,
+        80
       ],
       "id": "41c45eae-565e-464f-a9c8-1037e39a2989",
       "name": "HTTP Request"
@@ -71,8 +71,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        624,
-        0
+        352,
+        -208
       ],
       "id": "f55f4cb4-a8a4-45f0-ba56-40b7a01f54f7",
       "name": "If"
@@ -104,6 +104,12 @@
               "name": "profile_url",
               "value": "={{$json.html_url}}",
               "type": "string"
+            },
+            {
+              "id": "8474a37b-a344-4e0c-a733-d7bae6d40d7b",
+              "name": "email",
+              "value": "={{$node[\"Code in JavaScript\"].json[\"email\"]}}",
+              "type": "string"
             }
           ]
         },
@@ -112,8 +118,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        832,
-        -96
+        416,
+        48
       ],
       "id": "db1fa3a7-b435-4b2b-ad7e-ab9f265d60d2",
       "name": "Edit Fields"
@@ -141,7 +147,8 @@
             "github_username": "={{$json.github_username}}",
             "full_name": "={{$json.full_name}}",
             "public_repos": "={{$json.public_repos}}",
-            "profile_url": "={{$json.profile_url}}"
+            "profile_url": "={{$json.profile_url}}",
+            "email": "={{$node[\"Code in JavaScript\"].json[\"email\"]}}"
           },
           "matchingColumns": [],
           "schema": [
@@ -181,6 +188,16 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
           "attemptToConvertTypes": false,
@@ -191,8 +208,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1040,
-        -96
+        608,
+        -208
       ],
       "id": "d46a69a3-589a-474b-adaf-ddc45d3d27bd",
       "name": "Append row in sheet",
@@ -200,6 +217,51 @@
         "googleSheetsOAuth2Api": {
           "id": "IVgJoqN7lYsNrXx3",
           "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$json.email}}",
+        "subject": "=Welcome {{$json.full_name}}!",
+        "message": "=Hi {{$json.full_name}},  Welcome! Your GitHub profile has been verified.  Username: {{$json.github_username}} Public Repos: {{$json.public_repos}} Profile: {{$json.profile_url}}  Best regards, Automation System",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        80
+      ],
+      "id": "fa6157d5-22ec-4abb-812b-27905b0345ed",
+      "name": "Send a message",
+      "webhookId": "f97ee9bc-1c53-4ad1-a001-587876d01e98",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "57cEUEMsoEMV4jEQ",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "7661106210",
+        "text": "=New registration!\nName: {{$node[\"Edit Fields\"].json[\"full_name\"]}}\nGitHub: {{$node[\"Edit Fields\"].json[\"github_username\"]}}\nRepos: {{$node[\"Edit Fields\"].json[\"public_repos\"]}}\nEmail: {{$node[\"Edit Fields\"].json[\"email\"]}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        848,
+        80
+      ],
+      "id": "95a16c9f-19de-4f3e-86dc-ae95a4ed5abd",
+      "name": "Send a text message",
+      "webhookId": "3c6d91df-0f42-4e34-8ce3-0a6e949eeecc",
+      "credentials": {
+        "telegramApi": {
+          "id": "RVPXu8qELOIXha9X",
+          "name": "Telegram account"
         }
       }
     }
@@ -260,6 +322,28 @@
           }
         ]
       ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -267,7 +351,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "d075691d-4671-4e9a-88d2-5e393ffdae9a",
+  "versionId": "ef476a83-43ab-44fd-bbce-952bdfbc537e",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
