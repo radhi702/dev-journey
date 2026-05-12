@@ -117,6 +117,91 @@
       ],
       "id": "db1fa3a7-b435-4b2b-ad7e-ab9f265d60d2",
       "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1pmxJikpoMAMht6xRKtMOuzJR5VvP8y_8BY0L1HuqK8M",
+          "mode": "list",
+          "cachedResultName": "n8n Automation data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1pmxJikpoMAMht6xRKtMOuzJR5VvP8y_8BY0L1HuqK8M/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1pmxJikpoMAMht6xRKtMOuzJR5VvP8y_8BY0L1HuqK8M/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "github_username": "={{$json.github_username}}",
+            "full_name": "={{$json.full_name}}",
+            "public_repos": "={{$json.public_repos}}",
+            "profile_url": "={{$json.profile_url}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "github_username",
+              "displayName": "github_username",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "full_name",
+              "displayName": "full_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "public_repos",
+              "displayName": "public_repos",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "profile_url",
+              "displayName": "profile_url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1040,
+        -96
+      ],
+      "id": "d46a69a3-589a-474b-adaf-ddc45d3d27bd",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "IVgJoqN7lYsNrXx3",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -164,6 +249,17 @@
           }
         ]
       ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -171,8 +267,9 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "9b34c930-c220-4e38-bcc2-f94a4a7c0a92",
+  "versionId": "d075691d-4671-4e9a-88d2-5e393ffdae9a",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
   },
   "id": "8sv4qbpN2rt47pKi",
