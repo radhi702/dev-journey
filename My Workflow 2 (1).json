@@ -1,0 +1,171 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 13
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -592,
+        -80
+      ],
+      "id": "77bad013-cf48-46a5-b4f1-da0ed938ca58",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Gurgaon&appid=76a5ed78eb1e2822d959aaef0a5c7616&units=metric",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -480,
+        -288
+      ],
+      "id": "85b4d79b-08f9-4ab3-8d25-2804edcb9c38",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "url": "https://newsapi.org/v2/top-headlines?category=technology&apiKey=affa20cb1a29488183b0365e905f197f&pageSize=5",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -400,
+        -64
+      ],
+      "id": "eeed3954-fe18-4047-a8dc-579b00441c34",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/users/radhi702",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -256,
+        -272
+      ],
+      "id": "17c9a676-908e-46e0-9905-5ee420ae1ba7",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get data from all 3 nodes\nconst weather = $node[\"HTTP Request\"].json;\nconst news = $node[\"HTTP Request1\"].json;\nconst github = $node[\"HTTP Request2\"].json;\n\n// Extract weather details\nconst city = weather.name;\nconst temp = weather.main.temp;\nconst description = weather.weather[0].description;\n\n// Extract top 3 news headlines\nconst headlines = news.articles.slice(0, 3).map((article, index) => {\n  return `${index + 1}. ${article.title}`;\n}).join(\"\\n\");\n\n// Extract github details\nconst repos = github.public_repos;\nconst username = github.login;\n\n// Build the final message\nconst message = `\n🌅 Good Morning Radhika!\n\n🌤 Weather in ${city}:\n${temp}°C — ${description}\n\n📰 Top Tech News:\n${headlines}\n\n💻 GitHub: ${username}\nPublic Repos: ${repos}\n\nHave a productive day! 🚀\n`;\n\nreturn [{ json: { message } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -192,
+        -48
+      ],
+      "id": "d99e1561-c835-462b-8ef6-5c04f8e38c9d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "chatId": "7661106210",
+        "text": "={{$json.message}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        32,
+        -48
+      ],
+      "id": "a0234bed-6fd7-441b-8413-8e65a471321c",
+      "name": "Send a text message",
+      "webhookId": "15d91bee-bdca-41f2-b7eb-3b03fd747e87",
+      "credentials": {
+        "telegramApi": {
+          "id": "RVPXu8qELOIXha9X",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "540a73a8-7fcb-42b5-94a5-772cd40a99d1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "7lPYFabRV757fvr1",
+  "tags": []
+}
