@@ -32,7 +32,8 @@
         -288
       ],
       "id": "85b4d79b-08f9-4ab3-8d25-2804edcb9c38",
-      "name": "HTTP Request"
+      "name": "HTTP Request",
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -46,7 +47,8 @@
         -64
       ],
       "id": "eeed3954-fe18-4047-a8dc-579b00441c34",
-      "name": "HTTP Request1"
+      "name": "HTTP Request1",
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -60,11 +62,12 @@
         -272
       ],
       "id": "17c9a676-908e-46e0-9905-5ee420ae1ba7",
-      "name": "HTTP Request2"
+      "name": "HTTP Request2",
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
-        "jsCode": "// Get data from all 3 nodes\nconst weather = $node[\"HTTP Request\"].json;\nconst news = $node[\"HTTP Request1\"].json;\nconst github = $node[\"HTTP Request2\"].json;\n\n// Extract weather details\nconst city = weather.name;\nconst temp = weather.main.temp;\nconst description = weather.weather[0].description;\n\n// Extract top 3 news headlines\nconst headlines = news.articles.slice(0, 3).map((article, index) => {\n  return `${index + 1}. ${article.title}`;\n}).join(\"\\n\");\n\n// Extract github details\nconst repos = github.public_repos;\nconst username = github.login;\n\n// Build the final message\nconst message = `\n🌅 Good Morning Radhika!\n\n🌤 Weather in ${city}:\n${temp}°C — ${description}\n\n📰 Top Tech News:\n${headlines}\n\n💻 GitHub: ${username}\nPublic Repos: ${repos}\n\nHave a productive day! 🚀\n`;\n\nreturn [{ json: { message } }];"
+        "jsCode": "// Weather data with error handling\nlet weatherInfo;\ntry {\n  const weather = $node[\"HTTP Request\"].json;\n  const city = weather.name;\n  const temp = weather.main.temp;\n  const description = weather.weather[0].description;\n  weatherInfo = `🌤 Weather in ${city}:\\n${temp}°C — ${description}`;\n} catch (error) {\n  weatherInfo = `🌤 Weather: unavailable right now`;\n}\n\n// News data with error handling\nlet newsInfo;\ntry {\n  const news = $node[\"HTTP Request1\"].json;\n  const headlines = news.articles.slice(0, 3).map((article, index) => {\n    return `${index + 1}. ${article.title}`;\n  }).join(\"\\n\");\n  newsInfo = `📰 Top Tech News:\\n${headlines}`;\n} catch (error) {\n  newsInfo = `📰 News: unavailable right now`;\n}\n\n// GitHub data with error handling\nlet githubInfo;\ntry {\n  const github = $node[\"HTTP Request2\"].json;\n  githubInfo = `💻 GitHub: ${github.login}\\nPublic Repos: ${github.public_repos}`;\n} catch (error) {\n  githubInfo = `💻 GitHub: unavailable right now`;\n}\n\n// Build final message\nconst message = `\n🌅 Good Morning Radhika!\n\n${weatherInfo}\n\n${newsInfo}\n\n${githubInfo}\n\nHave a productive day! 🚀\n`;\n\nreturn [{ json: { message } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -73,7 +76,8 @@
         -48
       ],
       "id": "d99e1561-c835-462b-8ef6-5c04f8e38c9d",
-      "name": "Code in JavaScript"
+      "name": "Code in JavaScript",
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -95,7 +99,8 @@
           "id": "RVPXu8qELOIXha9X",
           "name": "Telegram account"
         }
-      }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "pinData": {},
@@ -161,7 +166,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "540a73a8-7fcb-42b5-94a5-772cd40a99d1",
+  "versionId": "d3de5fac-6e29-489d-b8d2-0a47f1f926a8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
