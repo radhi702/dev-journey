@@ -1,0 +1,64 @@
+{
+  "name": "Error Alert System",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1024,
+        -32
+      ],
+      "id": "e33f5e25-1a14-43ce-b38a-8de73eeabe89",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "chatId": "7661106210",
+        "text": "=🚨 WORKFLOW FAILED 🚨  Workflow: {{$json.workflow.name}} Broken node: {{$json.execution.lastNodeExecuted}} Error: {{$json.execution.error.message}}  Fix it here: {{$json.execution.url}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -832,
+        -32
+      ],
+      "id": "ed9c0df0-2842-45e3-983e-1f52bd664d57",
+      "name": "Send a text message",
+      "webhookId": "df2355ce-2c68-4f43-8c19-51cc68cff046",
+      "credentials": {
+        "telegramApi": {
+          "id": "RVPXu8qELOIXha9X",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "d8ffd0d6-7018-426a-86f1-f8d7c537249f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "kji2uBo3wdwjOO3r",
+  "tags": []
+}
