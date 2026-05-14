@@ -67,7 +67,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Weather data with error handling\nlet weatherInfo;\ntry {\n  const weather = $node[\"HTTP Request\"].json;\n  const city = weather.name;\n  const temp = weather.main.temp;\n  const description = weather.weather[0].description;\n  weatherInfo = `🌤 Weather in ${city}:\\n${temp}°C — ${description}`;\n} catch (error) {\n  weatherInfo = `🌤 Weather: unavailable right now`;\n}\n\n// News data with error handling\nlet newsInfo;\ntry {\n  const news = $node[\"HTTP Request1\"].json;\n  const headlines = news.articles.slice(0, 3).map((article, index) => {\n    return `${index + 1}. ${article.title}`;\n  }).join(\"\\n\");\n  newsInfo = `📰 Top Tech News:\\n${headlines}`;\n} catch (error) {\n  newsInfo = `📰 News: unavailable right now`;\n}\n\n// GitHub data with error handling\nlet githubInfo;\ntry {\n  const github = $node[\"HTTP Request2\"].json;\n  githubInfo = `💻 GitHub: ${github.login}\\nPublic Repos: ${github.public_repos}`;\n} catch (error) {\n  githubInfo = `💻 GitHub: unavailable right now`;\n}\n\n// Build final message\nconst message = `\n🌅 Good Morning Radhika!\n\n${weatherInfo}\n\n${newsInfo}\n\n${githubInfo}\n\nHave a productive day! 🚀\n`;\n\nreturn [{ json: { message } }];"
+        "jsCode": "// Weather data with error handling\nlet weatherInfo;\ntry {\n  const weather = $node[\"HTTP Request\"].json;\n  const city = weather.name;\n  const temp = weather.main.temp;\n  const description = weather.weather[0].description;\n  weatherInfo = `🌤 Weather in ${city}:\\n${temp}°C — ${description}`;\n} catch (error) {\n  weatherInfo = `🌤 Weather: unavailable right now`;\n}\n\n// News data with error handling\nlet newsInfo;\ntry {\n  const news = $node[\"HTTP Request1\"].json;\n  const headlines = news.articles.slice(0, 3).map((article, index) => {\n    return `${index + 1}. ${article.title}`;\n  }).join(\"\\n\");\n  newsInfo = `📰 Top Tech News:\\n${headlines}`;\n} catch (error) {\n  newsInfo = `📰 News: unavailable right now`;\n}\n\n// GitHub data with error handling\nlet githubInfo;\ntry {\n  const github = $node[\"HTTP Request2\"].json;\n  githubInfo = `💻 GitHub: ${github.login}\\nPublic Repos: ${github.public_repos}`;\n} catch (error) {\n  githubInfo = `💻 GitHub: unavailable right now`;\n}\n\n// Crypto data with error handling\nlet cryptoInfo;\ntry {\n  const crypto = $node[\"HTTP Request4\"].json;\n  const btcPrice = crypto.bitcoin.usd.toLocaleString();\n  const btcChange = crypto.bitcoin.usd_24h_change.toFixed(2);\n  const ethPrice = crypto.ethereum.usd.toLocaleString();\n  const ethChange = crypto.ethereum.usd_24h_change.toFixed(2);\n  const solPrice = crypto.solana.usd.toLocaleString();\n  const solChange = crypto.solana.usd_24h_change.toFixed(2);\n  cryptoInfo = `💰 Crypto Watch:\\nBTC: $${btcPrice} (${btcChange}%)\\nETH: $${ethPrice} (${ethChange}%)\\nSOL: $${solPrice} (${solChange}%)`;\n} catch (error) {\n  cryptoInfo = `💰 Crypto: unavailable right now`;\n}\n\n// Calendar (today's events)\nlet calendarInfo;\ntry {\n  const events = $('Get many events').all();\n  \n  // Filter out phantom empty items (from \"Always Output Data\")\n  const validEvents = events.filter(item => \n    item.json && item.json.start && item.json.start.dateTime\n  );\n  \n  if (validEvents.length === 0) {\n    calendarInfo = \"📅 Today's Schedule: Free day! No meetings, all focus 🎯\";\n  } else {\n    const formatted = validEvents.map(item => {\n      const event = item.json;\n      const startTime = new Date(event.start.dateTime).toLocaleTimeString('en-US', {\n        hour: 'numeric',\n        minute: '2-digit',\n        hour12: true,\n        timeZone: 'Asia/Kolkata'\n      });\n      return `- ${startTime}: ${event.summary || 'Untitled event'}`;\n    }).join('\\n');\n    \n    calendarInfo = `📅 Today's Schedule:\\n${formatted}`;\n  }\n} catch (error) {\n  calendarInfo = \"📅 Today's Schedule: Could not fetch calendar\";\n}\n\n\n// Build final message\nconst message = `\n🌅 Good Morning Radhika!\n\n${weatherInfo}\n\n${newsInfo}\n\n${githubInfo}\n\n${cryptoInfo}\n\n${calendarInfo}\n\nHave a productive day! 🚀\n`;\n\nreturn [{ json: { message } }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -110,7 +110,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"model\": \"llama-3.3-70b-versatile\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are Radhika's biggest hype coach and best friend. Your job: create HIGH-ENERGY morning briefings that make her feel like an unstoppable champion, queen, legend, rockstar, or boss (vary daily). Format with blank lines between sections: 🔥 EPIC power-greeting calling her something bold, ☀️ Weather framed as her dominating the day, 📰 Tech news with HYPE words like breakthrough wild on fire, 💻 GitHub celebrated as her empire growing one repo at a time, 🎯 ONE championship move for today, 👑 POWERFUL closing about her destined greatness. RULES: MAX energy with exclamation points, power words like unstoppable legendary crushing it, NO corporate words like furthermore additionally, 1-2 punchy short sentences per section, be specific not generic, sound like a hype coach not a news anchor.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify($json.message) }}\n    }\n  ]\n}",
+        "jsonBody": "={\n  \"model\": \"llama-3.3-70b-versatile\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are Radhika's biggest hype coach and best friend. Create HIGH-ENERGY morning briefings.\\n\\nCRITICAL FORMAT RULE: You MUST separate each section with TWO newline characters. Each section starts on its own line with a blank line between sections. NEVER put two sections on the same line.\\n\\nUse this EXACT structure (with blank lines as shown):\\n\\n🔥 [Bold power greeting]\\n\\n☀️ [Weather domination]\\n\\n📰 [Hyped tech news]\\n\\n💰 💰 [Crypto market vibe - mention BTC, ETH, SOL with prices and percent change]\\n\\n📅 [Today's schedule - hype each meeting or celebrate a free day]\\n\\n💻[GitHub empire]\\n\\n🎯 [Championship move]\\n\\n👑 [Powerful closing]\\n\\nCONTENT RULES: Make her feel like an unstoppable champion, queen, legend, rockstar (vary daily). MAX energy with exclamation points. Power words only: unstoppable, legendary, crushing it, breakthrough, fire, empire. NO corporate words. 1-2 short sentences per section. Be specific not generic. Sound like a hype coach not a news anchor. For crypto, make it sound exciting and trader-vibe.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify($json.message) }}\n    }\n  ]\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -127,6 +127,50 @@
           "name": "Groq API"
         }
       }
+    },
+    {
+      "parameters": {
+        "url": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd,inr&include_24hr_change=true",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -48,
+        -272
+      ],
+      "id": "b6941a8a-6799-433c-ad5f-aa723587217e",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "raikas9200@gmail.com",
+          "mode": "list",
+          "cachedResultName": "raikas9200@gmail.com"
+        },
+        "returnAll": true,
+        "timeMax": "={{ $now.endOf('day') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        -272
+      ],
+      "id": "87fc6e58-83a3-4fbd-b970-a5c156367256",
+      "name": "Get many events",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "bG7XaVFN0z5aqhDE",
+          "name": "Google Calendar account"
+        }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "pinData": {},
@@ -168,7 +212,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript",
+            "node": "HTTP Request4",
             "type": "main",
             "index": 0
           }
@@ -196,6 +240,28 @@
           }
         ]
       ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "Get many events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many events": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -208,7 +274,7 @@
     "availableInMCP": false,
     "timezone": "Asia/Kolkata"
   },
-  "versionId": "906dc501-38bf-48a3-9d94-7b712645c072",
+  "versionId": "7966d699-ca00-49dc-91d2-7bd4818ebbac",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
