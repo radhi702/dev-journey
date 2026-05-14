@@ -82,13 +82,13 @@
     {
       "parameters": {
         "chatId": "7661106210",
-        "text": "={{$json.message}}",
+        "text": "={{ $json.choices[0].message.content }}",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        32,
+        240,
         -48
       ],
       "id": "a0234bed-6fd7-441b-8413-8e65a471321c",
@@ -101,6 +101,32 @@
         }
       },
       "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama-3.3-70b-versatile\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are Radhika's biggest hype coach and best friend. Your job: create HIGH-ENERGY morning briefings that make her feel like an unstoppable champion, queen, legend, rockstar, or boss (vary daily). Format with blank lines between sections: 🔥 EPIC power-greeting calling her something bold, ☀️ Weather framed as her dominating the day, 📰 Tech news with HYPE words like breakthrough wild on fire, 💻 GitHub celebrated as her empire growing one repo at a time, 🎯 ONE championship move for today, 👑 POWERFUL closing about her destined greatness. RULES: MAX energy with exclamation points, power words like unstoppable legendary crushing it, NO corporate words like furthermore additionally, 1-2 punchy short sentences per section, be specific not generic, sound like a hype coach not a news anchor.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify($json.message) }}\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        16,
+        -48
+      ],
+      "id": "fc7d5a67-3f98-4d38-8b4a-c7ac98bdbe9f",
+      "name": "HTTP Request3",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SopuCPcKBN91oRY1",
+          "name": "Groq API"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -153,6 +179,17 @@
       "main": [
         [
           {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
             "node": "Send a text message",
             "type": "main",
             "index": 0
@@ -168,9 +205,10 @@
     "timeSavedMode": "fixed",
     "errorWorkflow": "kji2uBo3wdwjOO3r",
     "callerPolicy": "workflowsFromSameOwner",
-    "availableInMCP": false
+    "availableInMCP": false,
+    "timezone": "Asia/Kolkata"
   },
-  "versionId": "17e77ef2-77a7-44bf-a68d-5e4fb9d7a0da",
+  "versionId": "906dc501-38bf-48a3-9d94-7b712645c072",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
