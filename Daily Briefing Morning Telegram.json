@@ -22,7 +22,22 @@
     },
     {
       "parameters": {
-        "url": "https://api.openweathermap.org/data/2.5/weather?q=Gurgaon&appid=76a5ed78eb1e2822d959aaef0a5c7616&units=metric",
+        "url": "https://api.openweathermap.org/data/2.5/weather",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "Gurgaon"
+            },
+            {
+              "name": "units",
+              "value": "metric"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -33,11 +48,28 @@
       ],
       "id": "85b4d79b-08f9-4ab3-8d25-2804edcb9c38",
       "name": "HTTP Request",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "didD4Hn2HqbpqoWj",
+          "name": "OpenWeather API"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
       "parameters": {
-        "url": "https://newsapi.org/v2/top-headlines?category=technology&apiKey=affa20cb1a29488183b0365e905f197f&pageSize=5",
+        "url": "https://newsapi.org/v2/top-headlines",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "category",
+              "value": "technology"
+            }
+          ]
+        },
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -48,6 +80,16 @@
       ],
       "id": "eeed3954-fe18-4047-a8dc-579b00441c34",
       "name": "HTTP Request1",
+      "credentials": {
+        "httpQueryAuth": {
+          "id": "T8XRQC279F9bRb7A",
+          "name": "NewsAPI"
+        },
+        "httpHeaderAuth": {
+          "id": "m6xiyaPpavsaemqY",
+          "name": "NewsAPI Header"
+        }
+      },
       "onError": "continueRegularOutput"
     },
     {
@@ -274,7 +316,7 @@
     "availableInMCP": false,
     "timezone": "Asia/Kolkata"
   },
-  "versionId": "7966d699-ca00-49dc-91d2-7bd4818ebbac",
+  "versionId": "6ef2ae3c-ad63-4e5c-8003-16b88688f94f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
