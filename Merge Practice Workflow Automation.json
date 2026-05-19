@@ -1,0 +1,141 @@
+{
+  "name": "Merge Practice",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        -96
+      ],
+      "id": "6cb9b9e7-dfb4-403e-b59e-5a79b49f75ae",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8a9c70c7-f3c2-4300-afd4-21a5570d6202",
+              "name": "name",
+              "value": "Radhika",
+              "type": "string"
+            },
+            {
+              "id": "bfa63d87-636f-4e85-b017-5fd21bc671c3",
+              "name": "id",
+              "value": "101",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        64
+      ],
+      "id": "f5ba6be5-8475-453a-88c1-c1fc01f96fcf",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4824c5a-cfa9-4d6e-a617-995662b30133",
+              "name": "id",
+              "value": "101",
+              "type": "string"
+            },
+            {
+              "id": "5df2e8ef-a2dd-4bae-9138-79458a1ff457",
+              "name": "email",
+              "value": "raikas9200@gmail.com",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -272,
+        -160
+      ],
+      "id": "60b46f04-a1f5-4aff-be53-a794332fb5d4",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "id",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -64,
+        -64
+      ],
+      "id": "c354942f-fe5e-40af-b2b8-2c9486796845",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "0f6664aa-02ad-412a-b3c0-572c51d0dfd9",
+  "meta": {
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "mYqLmdRdKk7MkxSb",
+  "tags": []
+}
