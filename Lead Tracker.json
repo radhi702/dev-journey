@@ -1,0 +1,202 @@
+{
+  "name": "Lead Tracker",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -32
+      ],
+      "id": "b252dd93-e995-4d4e-9a99-14d32df51956",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "acd20b52-a8e5-4935-ae1d-ba1fffc6a045",
+              "name": "name",
+              "value": "Radz",
+              "type": "string"
+            },
+            {
+              "id": "6fb372a5-e670-4152-8c87-2d7712fe601d",
+              "name": "email",
+              "value": "rad@gmail.com",
+              "type": "string"
+            },
+            {
+              "id": "b302b8bb-fcaa-47c8-80eb-32be357568db",
+              "name": "city",
+              "value": "Gurgaon",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -176,
+        -256
+      ],
+      "id": "c9728fff-6a9e-4d5e-8e15-9c914bc5dc76",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "tableId": "lead",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "name",
+              "fieldValue": "={{ $('Edit Fields').first().json.name }}"
+            },
+            {
+              "fieldId": "email",
+              "fieldValue": "={{ $('Edit Fields').first().json.email }}"
+            },
+            {
+              "fieldId": "city",
+              "fieldValue": "={{ $('Edit Fields').first().json.city }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        -48
+      ],
+      "id": "e2d033c4-1bef-493f-b67d-2d915c35ed4c",
+      "name": "Create a row",
+      "credentials": {
+        "supabaseApi": {
+          "id": "0zpEVN3o3ViVNNLT",
+          "name": "Supabase account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "chatId": "7661106210",
+        "text": "= New lead added! Name: {{ $('Edit Fields').first().json.name }}, Email: {{ $('Edit Fields').first().json.email }}, City: {{ $('Edit Fields').first().json.city }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        -96
+      ],
+      "id": "0e0d531d-0019-4497-8ff2-726c491f62f9",
+      "name": "Send a text message",
+      "webhookId": "fa928a20-b2b6-4df1-9512-c1155158a34d",
+      "credentials": {
+        "telegramApi": {
+          "id": "RVPXu8qELOIXha9X",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "dc0bb214-1a07-4dc7-9109-f19101e56b25",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -16,
+        144
+      ],
+      "id": "a6e8e498-345d-427f-9e36-2d1f20a94445",
+      "name": "If1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6fdf8a9f-3b43-4541-9a29-2b636d92b4e9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "pgudG7jcK7U4x7xJ",
+  "tags": []
+}
