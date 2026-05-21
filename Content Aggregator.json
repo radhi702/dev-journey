@@ -9,7 +9,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        160,
+        112,
         -16
       ],
       "id": "489d1124-a77b-4500-a88e-7b244e43431b",
@@ -48,17 +48,6 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        336,
-        32
-      ],
-      "id": "48ffe0a9-f603-4036-b223-4b9fc362229e",
-      "name": "Merge"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
         512,
         -176
       ],
@@ -73,7 +62,7 @@
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
       "position": [
-        384,
+        352,
         192
       ],
       "id": "2d4f4f35-8120-4fe0-928f-6d5d33caf4e5",
@@ -167,6 +156,17 @@
       ],
       "id": "49bf50b6-e794-490a-b492-9ed630ce02a1",
       "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        352,
+        16
+      ],
+      "id": "34ff2ad0-e00f-4c39-82a1-ea1d53194693",
+      "name": "Merge"
     }
   ],
   "pinData": {},
@@ -193,17 +193,6 @@
         ]
       ]
     },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Merge1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "HTTP Request2": {
       "main": [
         [
@@ -219,7 +208,7 @@
       "main": [
         [
           {
-            "node": "Merge1",
+            "node": "Merge",
             "type": "main",
             "index": 1
           }
@@ -279,6 +268,17 @@
           }
         ]
       ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -288,10 +288,9 @@
     "timeSavedMode": "fixed",
     "timezone": "Asia/Kolkata",
     "callerPolicy": "workflowsFromSameOwner",
-    "executionTimeout": -1,
     "availableInMCP": false
   },
-  "versionId": "68e3d212-c964-459b-88cb-6109c1151ab2",
+  "versionId": "14e1dbb2-3712-46bf-83e8-d3cc84021de9",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
