@@ -1,0 +1,108 @@
+{
+  "name": "Webhook Api",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "64c37ddd-98f0-4646-8be6-b78b7feea26c",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -544,
+        -16
+      ],
+      "id": "fcbcd336-179b-4f39-9999-ee2c0c039055",
+      "name": "Webhook",
+      "webhookId": "64c37ddd-98f0-4646-8be6-b78b7feea26c",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "GNZPJiQ4VUE7ovQo",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2ddbaf17-11d7-4826-b0a6-a11218c6b737",
+              "name": "status",
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "id": "8adee998-b935-4871-b1c5-3621024970a3",
+              "name": "message",
+              "value": "Webhook received! Your API is working.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        -16
+      ],
+      "id": "61640656-d31b-4be1-b467-931ac28d6a49",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -160,
+        -16
+      ],
+      "id": "01df20d5-a80c-4792-a410-8cbe476daf7f",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "6e4cfe22-10bf-4cf2-aa56-afd8d6d95695",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "S0tLR4mdkS8cnK7L",
+  "tags": []
+}
