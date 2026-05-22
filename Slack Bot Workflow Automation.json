@@ -1,0 +1,69 @@
+{
+  "name": "Slack bot",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2298bfea-ac38-4593-a655-a3182eacd857",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0B5G5RNK8T",
+          "mode": "id"
+        },
+        "text": "Hello from n8n! Your Slack bot is working!",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "9a7cf2eb-26c5-4b79-b0d2-24224eb6caff",
+      "name": "Send a message",
+      "webhookId": "3ad009e0-b9f9-4687-b9ae-949fea4b136a",
+      "credentials": {
+        "slackApi": {
+          "id": "QrfUr4DlxUkIZNXw",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "505e47dd-69dc-4b40-a779-9b255f2fd365",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "K9ZhE72j2INH38xX",
+  "tags": []
+}
