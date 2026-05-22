@@ -1,0 +1,122 @@
+{
+  "name": "Airtable Test",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "eeaabb6b-c107-4184-8f68-a14e7ae6ad0f",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appu6cQaln72Kb70H",
+          "mode": "list",
+          "cachedResultName": "Lead Tracker",
+          "cachedResultUrl": "https://airtable.com/appu6cQaln72Kb70H"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblNSfTmzNIE7SXVH",
+          "mode": "list",
+          "cachedResultName": "Leads",
+          "cachedResultUrl": "https://airtable.com/appu6cQaln72Kb70H/tblNSfTmzNIE7SXVH"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "Test Person",
+            "Email": "test@email.com",
+            "City": "Mumbai"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "City",
+              "displayName": "City",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "f5d294bf-e03b-47de-956d-d8838842b533",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "YWsLK6ilMonP3I6b",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "1bf172cd-856e-4e18-ab7c-1bfcfd61fede",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "iA9SwQbhpD7Ld3O9",
+  "tags": []
+}
