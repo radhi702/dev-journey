@@ -1,0 +1,125 @@
+{
+  "name": "Slack Command Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "slack-command",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f1a0b8e1-a76f-403a-ac92-7b09efb88bb8",
+      "name": "Webhook",
+      "webhookId": "c83f40ff-6aad-4e3d-9392-b617ae9286fa"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "9369f70e-9a54-4cc2-b946-5a44fa3c264e",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "url": "=https://wttr.in/{{ $json.body.text }}?format=j1",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "30031c4f-96a1-4438-b146-b380e89c7fb8",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e61fb17a-5299-4807-90bf-f4a5eb490fce",
+              "name": "text",
+              "value": "=  🌤 Weather for {{ $('Webhook').first().json.body.text }}:  🌡 Temperature: {{ $json.current_condition[0].temp_C }}°C | 💧 Humidity: {{ $json.current_condition[0].humidity }}% | ☁️\n  Condition: {{ $json.current_condition[0].weatherDesc[0].value }} | 💨 Wind: {{ $json.current_condition[0].windspeedKmph }} km/h\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "2e3e10a7-8a86-4a65-96a5-b86204d822fb",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "f6f2e9a2-6c52-4955-a0c2-39f267ff578e",
+  "meta": {
+    "instanceId": "3d4206d0620ffafecdf68307d820eff51d1f9586527f792838afa2b6145b4cf8"
+  },
+  "id": "4sKjLASkyb4UXqFA",
+  "tags": []
+}
