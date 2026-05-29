@@ -32,7 +32,7 @@ def create_summary(pushes):
     repos = set()
 
     for push in pushes:
-        total_commits += len(push['payload']['commits'])
+        total_commits += len(push['payload'].get('commits', []))
         repos.add(push['repo']['name'])
 
     repo_list = ', '.join(repos)
