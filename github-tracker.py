@@ -28,15 +28,15 @@ def create_summary(pushes):
     if len(pushes) == 0:
         return 'No GitHub activity in the last 24 hours.'
 
-    total_commits = 0
+    total_pushes = 0
     repos = set()
 
     for push in pushes:
-        total_commits += len(push['payload'].get('commits', []))
+        total_pushes += 1
         repos.add(push['repo']['name'])
 
     repo_list = ', '.join(repos)
-    return f'GitHub Activity Summary:\nTotal commits: {total_commits}\nRepos: {repo_list}'
+    return f'GitHub Activity Summary:\nTotal pushes: {total_pushes}\nRepos: {repo_list}'
 
 def save_to_file(summary):
     date = datetime.now().strftime('%Y-%m-%d')
