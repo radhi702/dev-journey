@@ -13,3 +13,13 @@ def home():
 @app.get("/about")
 def about():
     return {"name": "Radhika", "role": "Automation Engineer in training", "day": 30}
+
+# Greet someone by name (name comes from the URL)
+@app.get("/greet/{name}")
+def greet(name: str):
+    return {"message": f"Hello {name}!"}
+
+# Add two numbers (both come from the URL)
+@app.get("/add/{a}/{b}")
+def add(a: int, b: int):
+    return {"result": a + b}
