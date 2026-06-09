@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning App - Results</title>
+    <!-- marked.js: tiny free library that turns markdown text into HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            max-width: 820px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.65;
+        }
+        h1 { font-size: 28px; margin-bottom: 8px; }
+        .meta {
+            color: #6e6e73;
+            font-size: 13px;
+            margin-bottom: 22px;
+            word-break: break-all;
+        }
+        .meta a { color: #0071e3; text-decoration: none; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+        .tab {
+            background: white;
+            border: 1px solid #d2d2d7;
+            padding: 10px 18px;
+            border-radius: 24px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .tab.active { background: #0071e3; color: white; border-color: #0071e3; }
+        .panel {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+            display: none;
+        }
+        .panel.active { display: block; }
+        .panel h2 { font-size: 20px; margin-top: 22px; }
+        .panel h3 { font-size: 17px; margin-top: 16px; }
+        .panel p { margin: 10px 0; }
+        .panel ul, .panel ol { padding-left: 22px; }
+        .panel code {
+            background: #f0f0f3;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .back {
+            display: inline-block;
+            margin-top: 24px;
+            color: #0071e3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .error {
+            background: #ffe5e5;
+            color: #c00;
+            padding: 18px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+        }
+        .badge {
+            display: inline-block;
+            background: #e8f0fe;
+            color: #1967d2;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Notes</h1>
+
+    {% if error %}
+        <div class="error"><strong>Something went wrong:</strong>
+{{ error }}</div>
+        <a class="back" href="/">&larr; Try another link</a>
+    {% else %}
+        <p class="meta">
+            From: <a href="{{ url }}" target="_blank">{{ url }}</a><br>
+            Type: <span class="badge">{{ kind }}</span>
+            AI used: <span class="badge">{{ brain_used }}</span>
+        </p>
+
+        <div class="tabs">
+            <button class="tab active" data-target="simplified">Simplified</button>
+            <button class="tab" data-target="notes">Notes</button>
+            <button class="tab" data-target="full">Full</button>
+        </div>
+
+        <div id="simplified" class="panel active" data-md="{{ simplified }}"></div>
+        <div id="notes" class="panel" data-md="{{ notes }}"></div>
+        <div id="full" class="panel" data-md="{{ full }}"></div>
+
+        <a class="back" href="/">&larr; Learn another</a>
+
+        <script>
+            // Render markdown into each panel using marked.js
+            document.querySelectorAll('.panel').forEach(p => {
+                const md = p.getAttribute('data-md') || '';
+                p.innerHTML = marked.parse(md);
+            });
+
+            // Tab switching
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    document.getElementById(tab.dataset.target).classList.add('active');
+                    tab.classList.add('active');
+                });
+            });
+        </script>
+    {% endif %}
+</body>
+</html>

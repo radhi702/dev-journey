@@ -1,13 +1,25 @@
-node_modules/
+# OS / editor
 .DS_Store
-credentials.md
-ROADMAP.md
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Secrets (every project's .env, plus root)
+.env
+**/.env
+
+# Private docs (not for portfolio)
+notes/credentials.md
+notes/ROADMAP.md
 CLAUDE.md
-git-notes.md
-n8n-expressions-cheatsheet.md
-.env 
-hello.txt
-github-activity-log.txt
-github-tracker.js
-api-health-log.txt
-job-listings.txt
+notes/git-notes.md
+notes/n8n-expressions-cheatsheet.md
+
+# Generated logs (every project's logs/ folder content except .gitkeep)
+projects/*/logs/*
+!projects/*/logs/.gitkeep
+
+# Misc generated learning files
+learning/misc/hello.txt
