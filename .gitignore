@@ -23,3 +23,6 @@ projects/*/logs/*
 
 # Misc generated learning files
 learning/misc/hello.txt
+
+# Active prototype — not portfolio-ready yet
+learning-app/
