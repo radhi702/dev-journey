@@ -20,3 +20,13 @@ python src/job_scraper.py
 ```
 
 Matched jobs go to `logs/job-listings.txt`.
+
+## Tests
+
+Tests mock the Gemini API at the network boundary, so they run offline and
+do not consume API quota.
+
+```bash
+pytest          # quiet
+pytest -v       # verbose (shows each test name)
+```
